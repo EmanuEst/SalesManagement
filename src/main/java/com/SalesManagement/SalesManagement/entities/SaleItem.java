@@ -19,12 +19,12 @@ public class SaleItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
-    @Column(name = "sale_id", nullable = false)
+    @JoinColumn(name = "sale_id", nullable = false)
     private Sale saleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
-    @Column(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product productId;
 
     @NotNull

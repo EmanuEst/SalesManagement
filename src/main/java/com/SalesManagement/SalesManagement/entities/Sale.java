@@ -22,6 +22,6 @@ public class Sale {
     @Column(name = "sale_date", nullable = false)
     private LocalDate sale_date;
 
-    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "saleId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SaleItem> saleItems;
 }
