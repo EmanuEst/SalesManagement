@@ -1,5 +1,7 @@
 package com.SalesManagement.SalesManagement.services;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,5 +21,9 @@ public class SaleItemService {
 
     public Page<SaleItemsWithSalesDTO> listAllSaleItems(Pageable pageable) {
         return siRepository.getAllSaleItems(pageable);
+    }
+
+    public Page<SaleItemsWithSalesDTO> listSaleItemsPerPeriod(Pageable pageable, LocalDate inicialDate, LocalDate finalDate) {
+        return siRepository.getSaleItemsPerPeriod(pageable, inicialDate, finalDate);
     }
 }
