@@ -1,6 +1,5 @@
 package com.SalesManagement.SalesManagement.dto;
 
-import java.math.BigDecimal;
 
 import com.SalesManagement.SalesManagement.entities.Product;
 
@@ -13,7 +12,7 @@ public record ProductDTO(
 
         @Size(min = 1, max = 500) String description,
 
-        @NotNull BigDecimal price,
+        @NotNull String price,
 
         @NotNull Integer stockQuantity) {
     public ProductDTO(
@@ -21,7 +20,7 @@ public record ProductDTO(
         this(
                 prod.getName(),
                 prod.getDescription(),
-                prod.getPrice(),
+                prod.getPrice().toString(),
                 prod.getStockQuantity());
     }
 }
