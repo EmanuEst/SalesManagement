@@ -31,7 +31,7 @@ public class SaleItemController {
 
     @GetMapping("/period")
     public ResponseEntity<Page<SaleItemsWithSalesDTO>> getSaleItemsPerPeriod(Pageable pageable,
-            @RequestParam LocalDate inicialDate, @RequestParam LocalDate finalDate) {
-        return ResponseEntity.ok().body(siService.listSaleItemsPerPeriod(pageable, inicialDate, finalDate));
+            @RequestParam LocalDate initialDate, @RequestParam LocalDate finalDate) throws Exception {
+        return ResponseEntity.ok().body(siService.listSaleItemsPerPeriod(pageable, initialDate, finalDate));
     }
 }

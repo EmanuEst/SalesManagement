@@ -23,7 +23,7 @@ public class SaleItemService {
         return siRepository.getAllSaleItems(pageable);
     }
 
-    public Page<SaleItemsWithSalesDTO> listSaleItemsPerPeriod(Pageable pageable, LocalDate inicialDate, LocalDate finalDate) {
-        return siRepository.getSaleItemsPerPeriod(pageable, inicialDate, finalDate);
+    public Page<SaleItemsWithSalesDTO> listSaleItemsPerPeriod(Pageable pageable, LocalDate initialDate, LocalDate finalDate) {
+        return siRepository.getSaleItemsPerPeriod(pageable, initialDate, finalDate);
     }
 }

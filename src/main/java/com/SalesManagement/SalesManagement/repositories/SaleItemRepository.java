@@ -38,8 +38,8 @@ public interface SaleItemRepository extends JpaRepository<SaleItem, Long> {
                 FROM SaleItem si
                 INNER JOIN si.saleId s
                 INNER JOIN si.productId p
-                WHERE s.saleDate BETWEEN :inicialDate AND :finalDate
+                WHERE s.saleDate BETWEEN :initialDate AND :finalDate
             """)
     public Page<SaleItemsWithSalesDTO> getSaleItemsPerPeriod(Pageable pageable,
-            @Param(value = "inicialDate") LocalDate inicialDate, @Param(value = "finalDate") LocalDate finalDate);
+            @Param(value = "initialDate") LocalDate initialDate, @Param(value = "finalDate") LocalDate finalDate);
 }

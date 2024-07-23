@@ -167,4 +167,24 @@ public class ReportService {
 
         return generateExcelFile("Sale Items", header, data);
     }
+
+    public ByteArrayInputStream saleItemsPerPeriod(Pageable pageable, LocalDate initialDate, LocalDate finalDate)
+            throws IOException {
+        Page<SaleItemsWithSalesDTO> saleItemsPagePeriod = siRepository.getSaleItemsPerPeriod(pageable, initialDate,
+                finalDate);
+        List<SaleItemsWithSalesDTO> saleItemsPeriod = saleItemsPagePeriod.getContent();
+
+        String[] header = {
+                "Product", "Description", "Price $", "Sale Date"
+        };
+
+        List<Object[]> data = saleItemsPeriod.stream()
+                .map(saleItemPeriod -> new Object[] {
+                        saleItemPeriod.product(), saleItemPeriod.description(), saleItemPeriod.price(),
+                        saleItemPeriod.saleDate()
+                })
+                .toList();
+
+        return generateExcelFile("Sale Items - Period", header, data);
+    }
 }
