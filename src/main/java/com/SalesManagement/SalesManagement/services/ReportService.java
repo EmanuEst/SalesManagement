@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -23,11 +25,15 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.SalesManagement.SalesManagement.dto.ProductDTO;
+import com.SalesManagement.SalesManagement.dto.SaleItemsWithSalesDTO;
 import com.SalesManagement.SalesManagement.entities.Product;
 import com.SalesManagement.SalesManagement.repositories.ProductRepository;
+import com.SalesManagement.SalesManagement.repositories.SaleItemRepository;
 import com.SalesManagement.SalesManagement.repositories.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -41,6 +47,8 @@ public class ReportService {
 
     @Autowired
     private final ProductRepository prodRepository;
+
+    private final SaleItemRepository siRepository;
 
     public ByteArrayInputStream generateExcelFile(String sheetName, String[] headers, List<Object[]> data)
             throws IOException {
@@ -93,6 +101,8 @@ public class ReportService {
                     cell.setCellValue((String) rowData[i]);
                 } else if (rowData[i] instanceof Number) {
                     cell.setCellValue(((Number) rowData[i]).doubleValue());
+                } else if (rowData[i] instanceof LocalDate) {
+                    cell.setCellValue(((LocalDate) rowData[i]).format(DateTimeFormatter.ofPattern("MM/dd/YYYY")));
                 }
                 cell.setCellStyle(dataStyle);
             }
@@ -125,18 +135,36 @@ public class ReportService {
     }
 
     public ByteArrayInputStream productsExcel() throws IOException {
-        List<Product> products = prodRepository.findAll();
+
+        List<Product> products = prodRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
 
         String[] header = {
-            "Product", "Description", "Price $", "Stock Quantity"
+                "Product", "Description", "Price $", "Stock Quantity"
         };
 
         List<Object[]> data = products.stream()
-                        .map(product -> new Object[] {
-                            product.getName(), product.getDescription(), product.getPrice(), product.getStockQuantity()
-                        })
-                        .toList();
-    
+                .map(product -> new Object[] {
+                        product.getName(), product.getDescription(), product.getPrice(), product.getStockQuantity()
+                })
+                .toList();
+
         return generateExcelFile("Products", header, data);
+    }
+
+    public ByteArrayInputStream saleItemsExcel(Pageable pageable) throws IOException {
+        Page<SaleItemsWithSalesDTO> saleItemsPage = siRepository.getAllSaleItems(pageable);
+        List<SaleItemsWithSalesDTO> saleItems = saleItemsPage.getContent();
+
+        String[] header = {
+                "Product", "Description", "Price $", "Sale Date"
+        };
+
+        List<Object[]> data = saleItems.stream()
+                .map(saleItem -> new Object[] {
+                        saleItem.product(), saleItem.description(), saleItem.price(), saleItem.saleDate()
+                })
+                .toList();
+
+        return generateExcelFile("Sale Items", header, data);
     }
 }

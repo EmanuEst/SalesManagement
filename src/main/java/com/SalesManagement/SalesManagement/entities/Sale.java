@@ -20,7 +20,7 @@ public class Sale {
 
     @NotNull
     @Column(name = "sale_date", nullable = false)
-    private LocalDate sale_date;
+    private LocalDate saleDate;
 
     @OneToMany(mappedBy = "saleId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<SaleItem> saleItems;
