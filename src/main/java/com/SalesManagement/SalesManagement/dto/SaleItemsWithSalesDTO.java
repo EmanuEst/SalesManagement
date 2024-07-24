@@ -6,12 +6,16 @@ import java.time.LocalDate;
 import com.SalesManagement.SalesManagement.entities.Product;
 import com.SalesManagement.SalesManagement.entities.Sale;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 public record SaleItemsWithSalesDTO(
-        String product,
+        @NotNull @NotBlank String product,
 
-        String description,
+        @Size(min = 1, max = 500) String description,
 
-        BigDecimal price,
+        @NotNull BigDecimal price,
 
         LocalDate saleDate) {
     public SaleItemsWithSalesDTO(Sale s, Product p) {

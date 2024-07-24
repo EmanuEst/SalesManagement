@@ -12,6 +12,7 @@ import com.SalesManagement.SalesManagement.repositories.SaleItemRepository;
 
 import lombok.RequiredArgsConstructor;
 
+
 @Service
 @RequiredArgsConstructor
 public class SaleItemService {
@@ -19,11 +20,11 @@ public class SaleItemService {
     @Autowired
     private final SaleItemRepository siRepository;
 
-    public Page<SaleItemsWithSalesDTO> listAllSaleItems(Pageable pageable) {
+    public Page<SaleItemsWithSalesDTO> listAllSaleItems(Pageable pageable) throws Exception {
         return siRepository.getAllSaleItems(pageable);
     }
 
-    public Page<SaleItemsWithSalesDTO> listSaleItemsPerPeriod(Pageable pageable, LocalDate initialDate, LocalDate finalDate) {
+    public Page<SaleItemsWithSalesDTO> listSaleItemsPerPeriod(Pageable pageable, LocalDate initialDate, LocalDate finalDate) throws Exception {
         return siRepository.getSaleItemsPerPeriod(pageable, initialDate, finalDate);
     }
 }

@@ -3,6 +3,7 @@ package com.SalesManagement.SalesManagement.controllers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -67,7 +68,10 @@ public class ReportController {
         ByteArrayInputStream bis = reportService.saleItemsPerPeriod(null, initialDate, finalDate);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=SaleItemsPeriod.xlsx");
+        headers.add("Content-Disposition",
+                "attachment; filename=SaleItemsPeriod - "
+                        + initialDate.format(DateTimeFormatter.ofPattern("MM-dd-YYYY")) + " to "
+                        + finalDate.format(DateTimeFormatter.ofPattern("MM-dd-YYYY")) + ".xlsx");
 
         return ResponseEntity
                 .ok()

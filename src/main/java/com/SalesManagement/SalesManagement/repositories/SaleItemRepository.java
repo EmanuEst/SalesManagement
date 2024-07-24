@@ -25,6 +25,7 @@ public interface SaleItemRepository extends JpaRepository<SaleItem, Long> {
                 FROM SaleItem si
                 INNER JOIN si.saleId s
                 INNER JOIN si.productId p
+                ORDER BY s.saleDate ASC
             """)
     public Page<SaleItemsWithSalesDTO> getAllSaleItems(Pageable pageable);
 
@@ -39,6 +40,7 @@ public interface SaleItemRepository extends JpaRepository<SaleItem, Long> {
                 INNER JOIN si.saleId s
                 INNER JOIN si.productId p
                 WHERE s.saleDate BETWEEN :initialDate AND :finalDate
+                ORDER BY s.saleDate ASC
             """)
     public Page<SaleItemsWithSalesDTO> getSaleItemsPerPeriod(Pageable pageable,
             @Param(value = "initialDate") LocalDate initialDate, @Param(value = "finalDate") LocalDate finalDate);

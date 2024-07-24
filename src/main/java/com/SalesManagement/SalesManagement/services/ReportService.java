@@ -34,16 +34,12 @@ import com.SalesManagement.SalesManagement.dto.SaleItemsWithSalesDTO;
 import com.SalesManagement.SalesManagement.entities.Product;
 import com.SalesManagement.SalesManagement.repositories.ProductRepository;
 import com.SalesManagement.SalesManagement.repositories.SaleItemRepository;
-import com.SalesManagement.SalesManagement.repositories.SaleRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class ReportService {
-
-    @Autowired
-    private final SaleRepository saleRepository;
 
     @Autowired
     private final ProductRepository prodRepository;
